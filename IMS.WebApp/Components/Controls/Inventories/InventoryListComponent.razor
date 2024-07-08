@@ -1,0 +1,28 @@
+﻿@inject IViewInventoriesByNameUseCase ViewInventoriesByNameUseCase
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Inventory Name</th>
+            <th>Inventory Quantity</th>
+            <th>Inventory Price</th>
+            <th></th>
+        </tr>
+        @if (inventories is not null && inventories.Count > 0)
+        {
+            foreach (Inventory inv in inventories)
+            {
+                <InventoryListItemComponent Inventory="inv" />
+            }
+        }
+    </thead>
+</table>
+
+@code {
+    private List<Inventory>? inventories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync()).ToList();
+    }
+}
