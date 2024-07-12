@@ -35,7 +35,6 @@
     private async Task Save()
     {
         await AddInventoryUseCase.ExecuteAsync(inventory);
-
         NavigationManager.NavigateTo("/inventories");
     }
 }
