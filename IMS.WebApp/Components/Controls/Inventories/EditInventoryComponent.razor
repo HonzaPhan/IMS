@@ -1,0 +1,49 @@
+﻿@inject IViewInventoryByIdUseCase ViewInventoryByIdUseCase
+@inject IEditInventoryUseCase EditInventoryUseCase
+@inject NavigationManager NavigationManager
+
+@if (Inventory != null)
+{
+    <EditForm Model="Inventory" FormName="formInventory" OnValidSubmit="() => Update(Inventory)">
+        <DataAnnotationsValidator />
+
+        <InputNumber @bind-Value="Inventory.InventoryId" hidden />
+
+        <div class="form-group">
+            <label for="name">Inventory Name</label>
+            <InputText id="name" @bind-Value="Inventory.InventoryName" class="form-control" />
+            <ValidationMessage For="@(() => Inventory.InventoryName)" />
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" @bind-Value="Inventory.Quantity" class="form-control" />
+            <ValidationMessage For="@(() => Inventory.Quantity)" />
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="Inventory.Price" class="form-control" />
+            <ValidationMessage For="@(() => Inventory.Price)" />
+        </div>
+        <br />
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        &nbsp;
+        <a href="/inventories" class="btn btn-danger">Cancel</a>
+    </EditForm>
+}
+
+
+@code {
+    [Parameter]
+    public Inventory? Inventory { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdate { get; set; }
+
+    private async Task Update(Inventory updatedInventory)
+    {
+        await OnUpdate.InvokeAsync(updatedInventory);
+    }
+}

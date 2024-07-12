@@ -1,4 +1,7 @@
-﻿@if (Inventory is not null)
+﻿@inject IDeleteInventoryUseCase DeleteInventoryUseCase
+@inject NavigationManager NavigationManager
+
+@if (Inventory is not null)
 {
     <tr>
         <td>@Inventory.InventoryName</td>
@@ -7,10 +10,19 @@
         <td>
             <a href="/inventories/edit/@Inventory.InventoryId" class="btn btn-light">Edit</a>
         </td>
+        <td>
+            <DeleteInventoryComponent Inventory="Inventory" OnDelete="() => DeleteInventory(Inventory.InventoryId)"/>
+        </td>
     </tr>
 }
 
 @code {
     [Parameter]
     public Inventory? Inventory { get; set; }
+
+    private async Task DeleteInventory(int id)
+    {
+        await DeleteInventoryUseCase.ExecuteAsync(id);
+        NavigationManager.Refresh();
+    }
 }

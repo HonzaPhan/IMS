@@ -8,34 +8,7 @@
 <br />
 @if (inventory != null)
 {
-    <EditForm Model="inventory" FormName="formInventory" OnValidSubmit="Update">
-        <DataAnnotationsValidator />
-
-        <InputNumber @bind-Value="inventory.InventoryId" hidden />
-
-        <div class="form-group">
-            <label for="name">Inventory Name</label>
-            <InputText id="name" @bind-Value="inventory.InventoryName" class="form-control" />
-            <ValidationMessage For="@(() => inventory.InventoryName)" />
-        </div>
-
-        <div class="form-group">
-            <label for="quantity">Quantity</label>
-            <InputNumber id="quantity" @bind-Value="inventory.Quantity" class="form-control" />
-            <ValidationMessage For="@(() => inventory.Quantity)" />
-        </div>
-
-        <div class="form-group">
-            <label for="price">Price</label>
-            <InputNumber id="price" @bind-Value="inventory.Price" class="form-control" />
-            <ValidationMessage For="@(() => inventory.Price)" />
-        </div>
-        <br />
-
-        <button type="submit" class="btn btn-primary">Update</button>
-        &nbsp;
-        <a href="/inventories" class="btn btn-danger">Cancel</a>
-    </EditForm>
+    <EditInventoryComponent Inventory="inventory" OnUpdate="() => Update(inventory)" />
 }
 
 @code {
@@ -50,11 +23,11 @@
         inventory ??= await ViewInventoryByIdUseCase.ExecuteAsync(Id);
     }
 
-    private async Task Update()
+    private async Task Update(Inventory updatedInventory)
     {
-        if (inventory != null)
+        if (updatedInventory != null)
         {
-            await EditInventoryUseCase.ExecuteAsync(inventory);
+            await EditInventoryUseCase.ExecuteAsync(updatedInventory);
             NavigationManager.NavigateTo("/inventories");
         }
     }
