@@ -4,6 +4,6 @@ namespace IMS.UseCases.Products.Interfaces
 {
     public interface IViewProductByIdUseCase
     {
-        Task<Product> ExecuteAsync(int id);
+        Task<Product?> ExecuteAsync(int id);
     }
 }

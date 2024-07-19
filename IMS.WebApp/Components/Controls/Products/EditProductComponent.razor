@@ -24,11 +24,15 @@
             <InputNumber id="price" @bind-Value="Product.Price" class="form-control" />
             <ValidationMessage For="@(() => Product.Price)" />
         </div>
+        <div class="form-group">
+            <label for="price">Inventories</label>
+            <ProductInventoriesComponent Product="Product" />
+        </div>
         <br />
 
         <button type="submit" class="btn btn-primary">Update</button>
         &nbsp;
-        <a href="/inventories" class="btn btn-danger">Cancel</a>
+        <a href="/products" class="btn btn-danger">Cancel</a>
     </EditForm>
 }
 

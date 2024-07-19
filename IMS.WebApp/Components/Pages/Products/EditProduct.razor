@@ -1,5 +1,9 @@
 ﻿@page "/products/edit/{id:int}"
 
+@rendermode InteractiveServer
+
+@inject IViewProductByIdUseCase ViewProductByIdUseCase
+@inject IEditProductUseCase EditProductUseCase
 @inject NavigationManager NavigationManager
 
 <h3>Edit Product</h3>
@@ -18,14 +22,14 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        // product ??= await ViewProductByIdUseCase.ExecuteAsync(Id);
+        product ??= await ViewProductByIdUseCase.ExecuteAsync(Id);
     }
 
     private async Task Update(Product updatedProduct)
     {
         if (updatedProduct != null)
         {
-            // await EditProductUseCase.ExecuteAsync(updatedProduct);
+            await EditProductUseCase.ExecuteAsync(updatedProduct);
             NavigationManager.NavigateTo("/products");
         }
     }
