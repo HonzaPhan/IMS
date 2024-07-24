@@ -1,0 +1,69 @@
+﻿@page "/produce"
+
+@rendermode InteractiveServer
+
+@using static IMS.WebApp.Components.Controls.Common.AutoCompleteComponent
+
+@inject IViewProductsByNameUseCase ViewProductsByNameUseCase
+@inject IViewProductByIdUseCase ViewProductByIdUseCase
+@inject IProduceProductUseCase ProduceProductUseCase
+
+<h3>Produce Product</h3>
+<br/>
+
+<EditForm Model="produceViewModel" OnValidSubmit="Produce">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="po">Production #</label>
+        <InputText id="po" class="form-control" @bind-Value="produceViewModel.ProductionNumber" />
+    </div>
+
+    <br />
+
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group">
+                <AutoCompleteComponent Label="Product"
+                                       SearchFunction="SearchProduct"
+                                       OnItemSelected="HandleItemSelected" />
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label for="qty">Quantity</label>
+        <InputNumber id="qty" class="form-control" @bind-Value="produceViewModel.QuantityToProduce" />
+    </div>
+    <br />
+
+    <button type="submit" class="btn btn-primary">Produce</button>
+</EditForm>
+
+@code {
+    private ProduceViewModel produceViewModel = new ProduceViewModel();
+    private Product? selectedProduct;
+
+    private List<ItemViewModel>? SearchProduct(string name)
+    {
+        IEnumerable<Product> list = ViewProductsByNameUseCase.ExecuteAsync(name).GetAwaiter().GetResult() ?? Enumerable.Empty<Product>();
+
+        return list.Select(x => new ItemViewModel { Id = x.ProductId, Name = x.ProductName }).ToList();
+    }
+
+    private async Task HandleItemSelected(ItemViewModel item)
+    {
+        selectedProduct = await ViewProductByIdUseCase.ExecuteAsync(item.Id);
+        produceViewModel.ProductId = item.Id;
+    }
+
+    private async Task Produce()
+    {
+        await ProduceProductUseCase.ExecuteAsync(produceViewModel.ProductionNumber, selectedProduct, produceViewModel.QuantityToProduce, "Honza");
+
+        produceViewModel = new ProduceViewModel();
+        selectedProduct = null;
+    }
+}
