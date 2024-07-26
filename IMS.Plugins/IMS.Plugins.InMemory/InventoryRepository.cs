@@ -33,7 +33,7 @@ namespace IMS.Plugins.InMemory
             return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Inventory>> GetInvetoriesByName(string name)
+        public async Task<IEnumerable<Inventory>> GetInvetoriesByNameAsync(string name)
         {
             if (string.IsNullOrEmpty(name))
             {

@@ -2,7 +2,7 @@
 {
     public enum InventoryTransactionType
     {
-        PurchaseIventory = 1,
+        PurchaseInventory = 1,
         ProduceProduct = 2,
     }
 }

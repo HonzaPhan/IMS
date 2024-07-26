@@ -46,11 +46,11 @@
         }
     }
 
-    private void UpdateSearchResults()
+    private async Task UpdateSearchResults()
     {
         if (!string.IsNullOrEmpty(_userInput) && SearchFunction != null)
         {
-            ViewItemsAsync();
+            await ViewItemsAsync();
         }
     }
 

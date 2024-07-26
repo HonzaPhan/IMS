@@ -14,7 +14,7 @@ namespace IMS.UseCases.Inventories
 
         public async Task<IEnumerable<Inventory>> ExecuteAsync(string name = "")
         {
-            return await _inventoryRepository.GetInvetoriesByName(name);
+            return await _inventoryRepository.GetInvetoriesByNameAsync(name);
         }
     }
 }
