@@ -26,9 +26,9 @@
     <div class="col">
         <label for="at">Activity Type</label>
         <select id="at" class="form-control" @bind="activityTypeId">
-            <option id="0">All</option>
-            <option id="1">Purchase Inventory</option>
-            <option id="2">Produce Product</option>
+            <option value="0"></option>
+            <option value="1">Purchase Inventory</option>
+            <option value="2">Produce Product</option>
         </select>
     </div>
 
@@ -40,8 +40,6 @@
 
 @if (inventoryTransactions != null && inventoryTransactions.Count() > 0)
 {
-    Console.WriteLine(inventoryTransactions);
-
     <table class="table table-striped">
         <thead>
             <tr>
@@ -58,7 +56,7 @@
             @foreach (InventoryTransaction it in inventoryTransactions)
             {
                 <tr>
-                    <td>@it.TransactionDate.ToString("MM/dd/yyyy")</td>
+                    <td>@it.TransactionDate.ToString("dd/MM/yyyy")</td>
                     <td>@it.Inventory?.InventoryName</td>
                     <td>
                         @if (it.ActivityType == InventoryTransactionType.PurchaseInventory)
@@ -82,13 +80,16 @@
 
 @code {
     private string invName = string.Empty;
-    private DateTime? dateFrom;
-    private DateTime? dateTo;
-    private InventoryTransactionType activityTypeId;
+    private DateTime? dateFrom, dateTo;
+    private int activityTypeId;
     private IEnumerable<InventoryTransaction>? inventoryTransactions;
 
     public async Task SearchInventories()
     {
-        inventoryTransactions = await SearchInventoryTransactionUseCase.ExecuteAsync(invName, dateFrom, dateTo, activityTypeId);
+        InventoryTransactionType? inventoryTransactionType = null;
+
+        if (activityTypeId != 0) inventoryTransactionType = (InventoryTransactionType)activityTypeId;
+
+        inventoryTransactions = await SearchInventoryTransactionUseCase.ExecuteAsync(invName, dateFrom, dateTo, inventoryTransactionType);
     }
 }
