@@ -21,6 +21,16 @@
     protected override async Task OnParametersSetAsync()
     {
         inventory ??= await ViewInventoryByIdUseCase.ExecuteAsync(Id);
+        {
+            var inventory = await ViewInventoryByIdUseCase.ExecuteAsync(Id);
+            inventory = new InventoryViewModel
+            {
+                InventoryId = inventory.InventoryId,
+                InventoryName = inventory.InventoryName,
+                Quantity = inventory.Quantity,
+                Price = inventory.Price
+            };
+        }
     }
 
     private async Task Update(Inventory updatedInventory)
