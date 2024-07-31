@@ -1,26 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>65d5b8a2-1870-43ca-b474-96bb8753f2c3</UserSecretsId>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="Components\Controls\Inventories\SearchComponent.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\IMS.CoreBusiness\IMS.CoreBusiness.csproj" />
-    <ProjectReference Include="..\IMS.Plugins.EFCoreSqlServer\IMS.Plugins.EFCoreSqlServer.csproj" />
-    <ProjectReference Include="..\IMS.Plugins\IMS.Plugins.InMemory\IMS.Plugins.InMemory.csproj" />
-    <ProjectReference Include="..\IMS.UseCases\IMS.UseCases.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Components\Controls\SearchComponent.razor" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
@@ -32,6 +16,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IMS.CoreBusiness\IMS.CoreBusiness.csproj" />
   </ItemGroup>
 
 </Project>

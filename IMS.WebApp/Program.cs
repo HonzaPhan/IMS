@@ -1,3 +1,4 @@
+using IMS.Plugins.EFCoreSqlServer;
 using IMS.Plugins.InMemory;
 using IMS.UseCases.Activities;
 using IMS.UseCases.Activities.Interfaces;
@@ -9,10 +10,16 @@ using IMS.UseCases.Products.Interfaces;
 using IMS.UseCases.Reports;
 using IMS.UseCases.Reports.Interfaces;
 using IMS.WebApp.Components;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
